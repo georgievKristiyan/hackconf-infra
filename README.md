@@ -3,24 +3,28 @@
 In this repository you will find all the necessary information about and step by step guide for **Micro service lifecycle - from code to production** workshop
 
 ## Prerequisites
-This workshop will cover the creation of a micro services application, testing and deployment. For this demonstration we will use free tools and accounts.
+This workshop will cover the packaging of a micro services application, testing and deployment. For this demonstration we will use free tools and accounts.
 
-##### Accounts
+#### Accounts
 - GitHub - https://github.com/join
 - MS Azure - https://azure.microsoft.com/en-us/free/
 - Docker Hub - https://hub.docker.com/signup
 
-##### Tools
+#### Tools
 - kubectl - https://kubernetes.io/docs/tasks/tools/install-kubectl/
 - helm -  https://helm.sh/docs/using_helm/#installing-helm
 - travis - https://github.com/travis-ci/travis.rb#installation
+- docker 
+  - Windows - https://docs.docker.com/docker-for-windows/install/
+  - MacOs - https://docs.docker.com/docker-for-mac/install/
+  - Ubuntu - https://docs.docker.com/install/linux/docker-ce/ubuntu/
 
 ## Kubernetes
 
-##### Registering AKS provider for the subscription
+#### Registering AKS provider for the subscription
 By default new Azure subscriptions need to have resource provider registered in order to use them.
 - Open azure cli
-- RUN 
+- Run
 ```#!/usr/bin/env bash
 
 SUBSCRIPTIONNAMEORID=YOURSUBSCRIPTIONID
@@ -41,7 +45,7 @@ echo 'Finished!'
 This script will register all resource provider to your subscription.
 <br/> Ref: https://pascalnaber.wordpress.com/2017/05/30/fixing-the-subscription-is-not-registered-to-use-namespace-microsoft-xxx/
 
-##### Creating the cluster
+#### Creating the cluster
 - Open the Azure portal
 - Navigate to Kubernetes services
 - Click Add
@@ -61,16 +65,23 @@ This script will register all resource provider to your subscription.
 - Click on next
 - Click on create
 
-##### Retrieving the cluster's kubeconfig
+#### Retrieving the cluster's kubeconfig
 - Open azure cli
 - Run `az aks get-credentials --resource-group ${RESOURCE_GROUP_NAME} --name ${KUBERNETES_NAME} --admin` 
   - Print the file returned by the previous cmd `cat /home/user/.kube/config`
   - Copy the file locally
 <br/> Ref: https://docs.microsoft.com/en-gb/azure/aks/control-kubeconfig-access
 
-##### Install tiller (helm) on the cluster
+#### Install tiller (helm) on the cluster
 - Export the kubeconfig `export KUBECONFIG=${FULL_PATH_TO_KUBECONFIG}`
 - Navigate to hackconf-infra/helm
 - Run `kubectl apply -f helm-rbac.yaml`
 - Run `helm init --history-max 200 --service-account tiller --node-selectors "beta.kubernetes.io/os=linux"`
 <br/> Ref: https://docs.microsoft.com/en-gb/azure/aks/kubernetes-helm
+
+## Travis-ci
+Travis CI is a hosted continuous integration service used to build and test software projects hosted at GitHub. 
+<br/>To get started with travis simply follow this steps:
+- Go to https://travis-ci.org/
+- Sign in using your GitHub credentials
+- Authorize travis to access your GitHub account
